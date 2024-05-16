@@ -37,8 +37,8 @@
                 <!-- utente -->
                 <div id="main-user" class="p-2 d-flex justify-content-between align-items-center">
                     <div>
-                        <img src="./img/avatar_1.jpg" class="rounded-circle me-2">
-                        <span class="fw-bold">Daniele</span>
+                        <img src="https://i.pravatar.cc" class="rounded-circle me-2">
+                        <span class="fw-bold">Utente</span>
                     </div>
                     <div>
                         <button class="border-0 mx-1"><i class="fa-solid fa-circle-notch"></i></button>
@@ -73,7 +73,7 @@
                 <div id="contact-list" class="h-75">
 
                     <!-- card contatto -->
-                    <div class="contact-card clearfix p-2 border-bottom">
+                    <!-- <div class="contact-card clearfix p-2 border-bottom">
                         <img src="./img/avatar_1.jpg" class="float-start h-100 rounded-circle me-2">
                         <div class="d-flex justify-content-between align-items-start ">
                             <div>
@@ -82,7 +82,30 @@
                             </div>
                             <span class="text-secondary">12.00</span>
                         </div>
+                    </div> -->
+
+                    <div class="contact-card clearfix p-2 border-bottom" v-for="element in contacts">
+                        <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
+                        <div class="d-flex justify-content-between align-items-start ">
+                            <div>
+                                <h6 class="m-0 fw-bold">{{element.name}}</h6>
+                                <span class="text-secondary">Ultimo messaggio</span>
+                            </div>
+                            <span class="text-secondary">12.00</span>
+                        </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <!-- fine-lista contatti -->
                 </div>
