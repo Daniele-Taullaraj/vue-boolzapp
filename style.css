@@ -1,0 +1,119 @@
+/*++++++++++++++++++++++++++++ GENERAL ++++++++++++++++++++++++++++*/
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    height: 100vh;
+    background: rgb(0, 149, 135);
+    background: linear-gradient(180deg, rgba(0, 149, 135, 1) 15%, rgba(215, 219, 215, 1) 15%);
+}
+
+img {
+    height: 50px;
+}
+
+#left-container #main-user button,
+#right-container #contact-active button {
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0.1rem;
+    color: #B1B1B1;
+    background-color: #EAEAEA;
+    border: 0;
+}
+
+#left-container #main-user button:hover,
+#right-container #contact-active button:hover {
+    border: 1px solid #B1B1B1;
+}
+
+
+/*++++++++++++++++++++++++++++ MAIN CONTAINER ++++++++++++++++++++++++++++*/
+#main-container {
+    width: 70%;
+    border: 1px solid black;
+}
+
+/*++++++++++++++++++++++++++++ LEFT CONTAINER ++++++++++++++++++++++++++++*/
+#left-container {
+    width: 35%;
+}
+
+/* left container main user */
+#left-container #main-user {
+    height: 8%;
+    background-color: #EAEAEA;
+}
+
+/* left container notification */
+#left-container #notification {
+    height: 10%;
+    background-color: #8EDAFC;
+}
+
+#left-container #notification button {
+    padding: 0.7rem;
+    border-color: transparent;
+    color: #8EDAFC;
+}
+
+#left-container #notification button:hover {
+    background-color: #EAEAEA;
+}
+
+/* left container find contact */
+#left-container #find-contact {
+    height: 7%;
+    background-color: #FAFAFA;
+}
+
+#left-container #find-contact button {
+    width: 20%;
+    border-color: #CED4DA;
+    background-color: white;
+}
+
+/* left container contact list */
+#left-container #contact-list {
+    overflow-y: scroll;
+}
+
+/* left container contact card */
+#left-container #contact-list .contact-card {
+    height: 13%;
+    background-color: white;
+    border-bottom-color: lightgrey;
+}
+
+/*++++++++++++++++++++++++++++ RIGHT CONTAINER ++++++++++++++++++++++++++++*/
+#right-container {
+    width: 65%;
+}
+
+/* right container contact active */
+#right-container #contact-active {
+    height: 8%;
+    background-color: #EAEAEA;
+    border-left-color: lightgray;
+}
+
+/* right container chat container */
+#right-container #chat-container {
+    height: 84%;
+    background-image: url(./img/mine.jpg);
+}
+
+/* right container input messaggio */
+#right-container #message-input {
+    height: 8%;
+    background-color: #EAEAEA;
+}
+
+#right-container #message-input button {
+    background-color: #EAEAEA;
+    color: #B1B1B1;
+}

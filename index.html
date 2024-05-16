@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- vue -->
+    <script src='https://unpkg.com/vue@3.4.27/dist/vue.global.js'></script>
+    <!-- axios -->
+    <script src="https://unpkg.com/axios@1.6.8/dist/axios.min.js"></script>
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Boolzapp</title>
+</head>
+
+<body>
+    <!-- contenitore app -->
+    <div id="app" class="py-4 w-100">
+        <!-- main-container contenente l'app -->
+        <div id="main-container" class="h-100 d-flex m-auto">
+
+            <!-- contenitore utente e lista chat -->
+            <div id="left-container">
+
+
+                <!-- utente -->
+                <div id="main-user" class="p-2 d-flex justify-content-between align-items-center">
+                    <div>
+                        <img src="./img/avatar_1.jpg" class="rounded-circle me-2">
+                        <span class="fw-bold">Daniele</span>
+                    </div>
+                    <div>
+                        <button><i class="fa-solid fa-circle-notch"></i></button>
+                        <button><i class="fa-solid fa-message"></i></button>
+                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                </div>
+
+
+                <!-- notifiche on/off -->
+                <div id="notification" class="p-2 d-flex align-items-center ">
+                    <button class="me-2 rounded-circle"><i class="fa-solid fa-bell-slash "></i></button>
+                    <div>
+                        <h6 class="m-0">Ricevi notifiche di nuovi messaggi</h6>
+                        <a href="https://www.google.it/?hl=it&pli=1" class="text-secondary">Attiva notifiche dekstop</a>
+                    </div>
+                </div>
+
+
+                <!-- cerca contatto -->
+                <div id="find-contact" class="input-group p-2">
+                    <button class="btn btn-light border" type="button"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat">
+                </div>
+
+
+                <!-- lista contatti -->
+                <div id="contact-list" class="h-75">
+
+                    <!-- card contatto -->
+                    <div class="contact-card clearfix p-2 border-bottom">
+                        <img src="./img/avatar_1.jpg" class="float-start h-100 rounded-circle me-2">
+                        <div class="d-flex justify-content-between align-items-start ">
+                            <div>
+                                <h6 class="m-0 fw-bold">Dani</h6>
+                                <span class="text-secondary">Ultimo messaggio</span>
+                            </div>
+                            <span class="text-secondary">12.00</span>
+                        </div>
+                    </div>
+
+                    <!-- fine-lista contatti -->
+                </div>
+                <!-- fine lest-container -->
+            </div>
+
+
+
+
+            <!-- contenitore chat attiva -->
+            <div id="right-container">
+
+                <!-- utente attivo -->
+                <div id="contact-active" class="p-2 border-start d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="./img/avatar_1.jpg" class="rounded-circle me-2">
+                        <div>
+                            <span class="fw-bold ">Daniele</span>
+                            <span class="d-block">Ultimo messaggio </span>
+                        </div>
+                    </div>
+                    <div>
+                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button><i class="fa-solid fa-paperclip"></i></i></button>
+                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                </div>
+
+                <!-- contenitore chat -->
+                <div id="chat-container" class="p-5 w-100 container">
+
+                    <!-- messaggio inviato -->
+                    <div class="row justify-content-end mb-2">
+                        <span class="send-message bg-light p-3 rounded-3 col-4">
+                            send
+                        </span>
+                    </div>
+
+
+                    <!-- messaggio inviato -->
+                    <div class="row justify-content-start mb-2">
+                        <span class="received-message bg-success p-3 rounded-3 col-4">
+                            lorem
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- input messaggio -->
+                <div id="message-input" class="d-flex align-items-center">
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0"><i
+                            class="fa-regular fa-face-smile"></i></button>
+
+                    <input type="text" class="form-control p-2" placeholder="Scrivi un messaggio">
+
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0"><i
+                            class="fa-solid fa-microphone"></i></button>
+                </div>
+
+
+                <!-- fine right-container -->
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
