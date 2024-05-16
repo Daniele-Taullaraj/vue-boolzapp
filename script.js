@@ -167,6 +167,7 @@ createApp({
             ],
             utenteAttivo: 0,
             isActive: null,
+            messaggioInviato: null,
         }
     },
     methods: {
@@ -182,8 +183,25 @@ createApp({
         // attiva nuovo utente al clik
         attivaChat(indice) {
             this.utenteAttivo = indice;
-            console.log(this.utenteAttivo)
+            // console.log(this.utenteAttivo)
         },
+
+        stampaMessaggio() {
+            // console.log(this.messaggioInviato)
+            this.contacts[this.utenteAttivo].messages.push({
+                date: '10/10/2020 23.52.00',
+                message: this.messaggioInviato,
+                status: 'sent'
+            })
+            this.messaggioInviato = "";
+            setTimeout(() => {
+                this.contacts[this.utenteAttivo].messages.push({
+                    date: '10/10/2020 23.52.00',
+                    message: "ok",
+                    status: 'received'
+                })
+            }, 1000);
+        }
 
     },
     mounted() {
