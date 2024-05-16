@@ -164,12 +164,26 @@ createApp({
                         }
                     ],
                 }
-            ]
-
-
+            ],
+            utenteAttivo: 0,
+            isActive: null,
         }
     },
     methods: {
+        // quando la pagina viene caricata attiva subito la prima chat
+        inizializzaChat(indice) {
+            if (indice == this.utenteAttivo) {
+                return "chat-attiva contact-card clearfix p-2 border-bottom"
+            } else {
+                return "contact-card clearfix p-2 border-bottom"
+            }
+        },
+
+        // attiva nuovo utente al clik
+        attivaChat(indice) {
+            this.utenteAttivo = indice;
+            console.log(this.utenteAttivo)
+        },
 
     },
     mounted() {

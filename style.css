@@ -22,11 +22,22 @@ img {
     height: 50px;
 }
 
+span,
+a {
+    font-size: 0.8rem;
+}
+
+.grassetto {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
 #left-container #main-user button,
 #right-container #contact-active button {
     color: var(--bg-grey-hard);
     background-color: var(--bg-grey-soft);
-    width: 2rem;
+    /* width: 1.2rem; */
 }
 
 /* hover button */
@@ -35,6 +46,10 @@ img {
 #left-container #notification button:hover,
 #right-container #message-input button:hover {
     color: black;
+}
+
+.chat-attiva {
+    background-color: darkgray !important;
 }
 
 
@@ -52,13 +67,13 @@ img {
 /* left container main user */
 #left-container #main-user {
     background-color: var(--bg-grey-soft);
-    height: 8%;
+    height: 9%;
 }
 
 /* left container notification */
 #left-container #notification {
     background-color: var(--bg-sky-blue);
-    height: 10%;
+    height: 9%;
 }
 
 #left-container #notification button {
@@ -98,14 +113,14 @@ img {
 #right-container #contact-active {
     background-color: var(--bg-grey-soft);
     border-left-color: var(--bg-grey-hard);
-    height: 8%;
+    height: 9%;
 }
 
 /* right container chat container */
 #right-container #chat-container {
     background-image: url(./img/mine.jpg);
     overflow-y: scroll;
-    height: 84%;
+    height: 83%;
 }
 
 /* right container input messaggio */

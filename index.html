@@ -35,33 +35,34 @@
 
 
                 <!-- utente -->
-                <div id="main-user" class="p-2 d-flex justify-content-between align-items-center">
+                <div id="main-user" class="p-2  d-flex justify-content-between align-items-center">
                     <div>
-                        <img src="https://i.pravatar.cc" class="rounded-circle me-2">
-                        <span class="fw-bold">Utente</span>
+                        <img src="https://i.pravatar.cc" class="rounded-circle me-2 ">
+                        <span class="grassetto">Utente</span>
                     </div>
                     <div>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-circle-notch"></i></button>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-message"></i></button>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-circle-notch"></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-message"></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                     </div>
                 </div>
 
 
                 <!-- notifiche on/off -->
                 <div id="notification" class="p-2 d-flex align-items-center ">
-                    <button class="me-2 p-3 rounded-circle border-0">
+                    <button class="me-2 p-2 rounded-circle border-0">
                         <i class="fa-solid fa-bell-slash "></i>
                     </button>
                     <div>
-                        <h6 class="m-0">Ricevi notifiche di nuovi messaggi</h6>
-                        <a href="https://www.google.it/?hl=it&pli=1" class="text-secondary">Attiva notifiche dekstop</a>
+                        <span class="grassetto d-block m-0">Ricevi notifiche di nuovi messaggi</span>
+                        <a href="https://www.google.it/?hl=it&pli=1" class="text-secondary">Attiva notifiche
+                            dekstop</a>
                     </div>
                 </div>
 
 
                 <!-- cerca contatto -->
-                <div id="find-contact" class="input-group p-2">
+                <div id="find-contact" class="input-group p-1">
                     <button class="btn btn-light border" type="button">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -73,22 +74,12 @@
                 <div id="contact-list" class="h-75">
 
                     <!-- card contatto -->
-                    <!-- <div class="contact-card clearfix p-2 border-bottom">
-                        <img src="./img/avatar_1.jpg" class="float-start h-100 rounded-circle me-2">
-                        <div class="d-flex justify-content-between align-items-start ">
-                            <div>
-                                <h6 class="m-0 fw-bold">Dani</h6>
-                                <span class="text-secondary">Ultimo messaggio</span>
-                            </div>
-                            <span class="text-secondary">12.00</span>
-                        </div>
-                    </div> -->
-
-                    <div class="contact-card clearfix p-2 border-bottom" v-for="element in contacts">
+                    <div v-for="(element,indice) in contacts" @click="attivaChat(indice)"
+                        :class="inizializzaChat(indice)">
                         <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
                         <div class="d-flex justify-content-between align-items-start ">
                             <div>
-                                <h6 class="m-0 fw-bold">{{element.name}}</h6>
+                                <span class="grassetto d-block m-0">{{element.name}}</span>
                                 <span class="text-secondary">Ultimo messaggio</span>
                             </div>
                             <span class="text-secondary">12.00</span>
@@ -122,48 +113,50 @@
                 <!-- utente attivo -->
                 <div id="contact-active" class="p-2 border-start d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="./img/avatar_1.jpg" class="rounded-circle me-2">
+                        <img :src="contacts[utenteAttivo].avatar" class="rounded-circle me-2">
                         <div>
-                            <span class="fw-bold ">Daniele</span>
-                            <span class="d-block">Ultimo messaggio </span>
+                            <span class="grassetto ">{{contacts[utenteAttivo].name}}</span>
+                            <span class="d-block">Ultimo messaggio</span>
                         </div>
                     </div>
                     <div>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-paperclip"></i></i></button>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        <button class="border-0 mx-1"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-paperclip"></i></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="border-0 mx-2 fs-6"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
 
                 <!-- contenitore chat -->
                 <div id="chat-container" class="p-5 w-100 container">
 
-                    <!-- messaggio inviato -->
-                    <div class="row justify-content-end mb-2">
-                        <span class="send-message bg-light p-3 rounded-3 col-4">
-                            send
-                        </span>
+                    <div v-for="element in contacts[utenteAttivo].messages">
+                        <!-- messaggio inviato -->
+                        <div v-if="element.status === 'sent'" class="row justify-content-end mb-2">
+                            <span class="send-message bg-light p-2 rounded-3 col-4">
+                                {{element.message}}
+                            </span>
+                        </div>
+
+
+                        <!-- messaggio ricevuto -->
+                        <div v-if="element.status === 'received'" class="row justify-content-start mb-2">
+                            <span class="received-message bg-success p-2 rounded-3 col-4">
+                                {{element.message}}
+                            </span>
+                        </div>
+
                     </div>
-
-
-                    <!-- messaggio ricevuto -->
-                    <div class="row justify-content-start mb-2">
-                        <span class="received-message bg-success p-3 rounded-3 col-4">
-                            lorem
-                        </span>
-                    </div>
-
                     <!-- fine chat -->
                 </div>
 
 
                 <!-- input messaggio -->
                 <div id="message-input" class="d-flex align-items-center">
-                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0">
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-5 border-0">
                         <i class="fa-regular fa-face-smile"></i>
                     </button>
                     <input type="text" class="form-control p-2" placeholder="Scrivi un messaggio">
-                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0">
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-5 border-0">
                         <i class="fa-solid fa-microphone"></i>
                     </button>
                 </div>
