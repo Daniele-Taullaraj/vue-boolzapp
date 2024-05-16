@@ -27,7 +27,7 @@
 <body>
     <!-- contenitore app -->
     <div id="app" class="py-4 w-100">
-        <!-- main-container contenente l'app -->
+        <!-- main-container -->
         <div id="main-container" class="h-100 d-flex m-auto">
 
             <!-- contenitore utente e lista chat -->
@@ -41,16 +41,18 @@
                         <span class="fw-bold">Daniele</span>
                     </div>
                     <div>
-                        <button><i class="fa-solid fa-circle-notch"></i></button>
-                        <button><i class="fa-solid fa-message"></i></button>
-                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-circle-notch"></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-message"></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                     </div>
                 </div>
 
 
                 <!-- notifiche on/off -->
                 <div id="notification" class="p-2 d-flex align-items-center ">
-                    <button class="me-2 rounded-circle"><i class="fa-solid fa-bell-slash "></i></button>
+                    <button class="me-2 p-3 rounded-circle border-0">
+                        <i class="fa-solid fa-bell-slash "></i>
+                    </button>
                     <div>
                         <h6 class="m-0">Ricevi notifiche di nuovi messaggi</h6>
                         <a href="https://www.google.it/?hl=it&pli=1" class="text-secondary">Attiva notifiche dekstop</a>
@@ -60,8 +62,9 @@
 
                 <!-- cerca contatto -->
                 <div id="find-contact" class="input-group p-2">
-                    <button class="btn btn-light border" type="button"><i
-                            class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-light border" type="button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                     <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat">
                 </div>
 
@@ -83,6 +86,7 @@
 
                     <!-- fine-lista contatti -->
                 </div>
+
                 <!-- fine lest-container -->
             </div>
 
@@ -102,9 +106,9 @@
                         </div>
                     </div>
                     <div>
-                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <button><i class="fa-solid fa-paperclip"></i></i></button>
-                        <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-paperclip"></i></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <button class="border-0 mx-1"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
 
@@ -119,25 +123,26 @@
                     </div>
 
 
-                    <!-- messaggio inviato -->
+                    <!-- messaggio ricevuto -->
                     <div class="row justify-content-start mb-2">
                         <span class="received-message bg-success p-3 rounded-3 col-4">
                             lorem
                         </span>
                     </div>
 
+                    <!-- fine chat -->
                 </div>
 
 
                 <!-- input messaggio -->
                 <div id="message-input" class="d-flex align-items-center">
-                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0"><i
-                            class="fa-regular fa-face-smile"></i></button>
-
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </button>
                     <input type="text" class="form-control p-2" placeholder="Scrivi un messaggio">
-
-                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0"><i
-                            class="fa-solid fa-microphone"></i></button>
+                    <button class="px-3 py-2 mx-3 rounded-3 fs-4 border-0">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
                 </div>
 
 

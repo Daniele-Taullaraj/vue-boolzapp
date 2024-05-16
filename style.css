@@ -5,6 +5,13 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg-grey-soft: #EAEAEA;
+    --bg-grey-hard: #B1B1B1;
+    --bg-sky-blue: #8EDAFC;
+}
+
+
 #app {
     height: 100vh;
     background: rgb(0, 149, 135);
@@ -17,18 +24,17 @@ img {
 
 #left-container #main-user button,
 #right-container #contact-active button {
+    color: var(--bg-grey-hard);
+    background-color: var(--bg-grey-soft);
     width: 2rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    margin: 0.1rem;
-    color: #B1B1B1;
-    background-color: #EAEAEA;
-    border: 0;
 }
 
+/* hover button */
 #left-container #main-user button:hover,
-#right-container #contact-active button:hover {
-    border: 1px solid #B1B1B1;
+#right-container #contact-active button:hover,
+#left-container #notification button:hover,
+#right-container #message-input button:hover {
+    color: black;
 }
 
 
@@ -45,36 +51,30 @@ img {
 
 /* left container main user */
 #left-container #main-user {
+    background-color: var(--bg-grey-soft);
     height: 8%;
-    background-color: #EAEAEA;
 }
 
 /* left container notification */
 #left-container #notification {
+    background-color: var(--bg-sky-blue);
     height: 10%;
-    background-color: #8EDAFC;
 }
 
 #left-container #notification button {
-    padding: 0.7rem;
-    border-color: transparent;
-    color: #8EDAFC;
-}
-
-#left-container #notification button:hover {
-    background-color: #EAEAEA;
+    color: var(--bg-sky-blue);
 }
 
 /* left container find contact */
 #left-container #find-contact {
+    background-color: var(--bg-grey-soft);
     height: 7%;
-    background-color: #FAFAFA;
 }
 
 #left-container #find-contact button {
-    width: 20%;
-    border-color: #CED4DA;
+    border-color: var(--bg-grey-hard);
     background-color: white;
+    width: 20%;
 }
 
 /* left container contact list */
@@ -84,9 +84,9 @@ img {
 
 /* left container contact card */
 #left-container #contact-list .contact-card {
-    height: 13%;
+    border-bottom-color: var(--bg-grey-hard);
     background-color: white;
-    border-bottom-color: lightgrey;
+    height: 13%;
 }
 
 /*++++++++++++++++++++++++++++ RIGHT CONTAINER ++++++++++++++++++++++++++++*/
@@ -96,24 +96,25 @@ img {
 
 /* right container contact active */
 #right-container #contact-active {
+    background-color: var(--bg-grey-soft);
+    border-left-color: var(--bg-grey-hard);
     height: 8%;
-    background-color: #EAEAEA;
-    border-left-color: lightgray;
 }
 
 /* right container chat container */
 #right-container #chat-container {
-    height: 84%;
     background-image: url(./img/mine.jpg);
+    overflow-y: scroll;
+    height: 84%;
 }
 
 /* right container input messaggio */
 #right-container #message-input {
+    background-color: var(--bg-grey-soft);
     height: 8%;
-    background-color: #EAEAEA;
 }
 
 #right-container #message-input button {
-    background-color: #EAEAEA;
-    color: #B1B1B1;
+    background-color: var(--bg-grey-soft);
+    color: var(--bg-grey-hard);
 }
