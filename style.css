@@ -123,6 +123,10 @@ a {
     height: 83%;
 }
 
+#right-container #chat-container .clock {
+    right: 0.3rem;
+}
+
 /* right container input messaggio */
 #right-container #message-input {
     background-color: var(--bg-grey-soft);

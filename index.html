@@ -30,12 +30,14 @@
         <!-- main-container -->
         <div id="main-container" class="h-100 d-flex m-auto">
 
+
+
             <!-- contenitore utente e lista chat -->
             <div id="left-container">
 
 
                 <!-- utente -->
-                <div id="main-user" class="p-2  d-flex justify-content-between align-items-center">
+                <div id="main-user" class="p-2 d-flex justify-content-between align-items-center">
                     <div>
                         <img src="https://i.pravatar.cc" class="rounded-circle me-2 ">
                         <span class="grassetto">Utente</span>
@@ -66,7 +68,8 @@
                     <button class="btn btn-light border" type="button">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat">
+                    <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat"
+                        @input="controlloInput" v-model="cercaContatto">
                 </div>
 
 
@@ -75,31 +78,20 @@
 
                     <!-- card contatto -->
                     <div v-for="(element,indice) in contacts" @click="attivaChat(indice)"
-                        :class="inizializzaChat(indice)">
+                        :class="inizializzaChat(indice)" :class="controlloInput">
                         <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
                         <div class="d-flex justify-content-between align-items-start ">
                             <div>
                                 <span class="grassetto d-block m-0">{{element.name}}</span>
-                                <span class="text-secondary">Ultimo messaggio</span>
+                                <span class="text-secondary ">{{arrayUltimoMessaggio[indice]}}</span>
                             </div>
-                            <span class="text-secondary">12.00</span>
+                            <span class="text-secondary">{{arrayOraUltimoMessaggio[indice]}}</span>
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
                     <!-- fine-lista contatti -->
                 </div>
+
 
                 <!-- fine lest-container -->
             </div>
@@ -110,13 +102,14 @@
             <!-- contenitore chat attiva -->
             <div id="right-container">
 
+
                 <!-- utente attivo -->
                 <div id="contact-active" class="p-2 border-start d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <img :src="contacts[utenteAttivo].avatar" class="rounded-circle me-2">
                         <div>
                             <span class="grassetto ">{{contacts[utenteAttivo].name}}</span>
-                            <span class="d-block">Ultimo messaggio</span>
+                            <span class="d-block">{{arrayUltimoMessaggio[utenteAttivo]}}</span>
                         </div>
                     </div>
                     <div>
@@ -126,22 +119,24 @@
                     </div>
                 </div>
 
+
                 <!-- contenitore chat -->
                 <div id="chat-container" class="p-5 w-100 container">
+                    <div v-for="element,i in contacts[utenteAttivo].messages">
 
-                    <div v-for="element in contacts[utenteAttivo].messages">
                         <!-- messaggio inviato -->
                         <div v-if="element.status === 'sent'" class="row justify-content-end mb-2">
-                            <span class="send-message bg-light p-2 rounded-3 col-4">
+                            <span class="send-message bg-light p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
+                                <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
                             </span>
                         </div>
 
-
                         <!-- messaggio ricevuto -->
-                        <div v-if="element.status === 'received'" class="row justify-content-start mb-2">
-                            <span class="received-message bg-success p-2 rounded-3 col-4">
+                        <div v-if="element.status === 'received'" class="row justify-content-start mb-2 ">
+                            <span class="received-message bg-success p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
+                                <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
                             </span>
                         </div>
 
@@ -162,22 +157,8 @@
                     </button>
                 </div>
 
-
                 <!-- fine right-container -->
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
     </div>

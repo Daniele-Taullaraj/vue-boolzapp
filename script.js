@@ -165,13 +165,22 @@ createApp({
                     ],
                 }
             ],
+            // variabile per tenere traccia dell'utente attivo
             utenteAttivo: 0,
-            isActive: null,
+            // variabile utilizzata per l'input da tasiera
             messaggioInviato: null,
+            // array utilizzati per sapere l'ulltimo messaggio e l'ultimo orario
+            arrayOraUltimoMessaggio: [],
+            arrayUltimoMessaggio: [],
+            // variabile per filtrare gli utenti
+            cercaContatto: "",
+            listaNomiMin: [],
+            nomeDoveImpazzisco: ""
         }
     },
     methods: {
-        // quando la pagina viene caricata attiva subito la prima chat
+
+        // quando la pagina viene caricata attiva subito la prima chat assegnando la classe chat-attiva
         inizializzaChat(indice) {
             if (indice == this.utenteAttivo) {
                 return "chat-attiva contact-card clearfix p-2 border-bottom"
@@ -183,28 +192,129 @@ createApp({
         // attiva nuovo utente al clik
         attivaChat(indice) {
             this.utenteAttivo = indice;
-            // console.log(this.utenteAttivo)
         },
 
+        // quando si clicca enter da tastiera stampa msg in pagina e manda risposta "ok" dopo 1sec,entrambi i messaggi
+        // nell'ordine di invio andranno a sostituire l'elemento con l'indice attivo nell'array ultimo messaggio e l'ora
         stampaMessaggio() {
-            // console.log(this.messaggioInviato)
-            this.contacts[this.utenteAttivo].messages.push({
-                date: '10/10/2020 23.52.00',
+            let userRisposta = {
+                date: '10/10/2020 23:52:00',
                 message: this.messaggioInviato,
                 status: 'sent'
-            })
+            }
+            this.contacts[this.utenteAttivo].messages.push(userRisposta);
+            this.arrayOraUltimoMessaggio[this.utenteAttivo] = this.recuperaOra(userRisposta)
+            this.arrayUltimoMessaggio[this.utenteAttivo] = this.messaggioInviato;
             this.messaggioInviato = "";
             setTimeout(() => {
-                this.contacts[this.utenteAttivo].messages.push({
-                    date: '10/10/2020 23.52.00',
+                let risposta = {
+                    date: '10/10/2020 00:10:00',
                     message: "ok",
                     status: 'received'
-                })
+                }
+                this.contacts[this.utenteAttivo].messages.push(risposta)
+                this.arrayOraUltimoMessaggio[this.utenteAttivo] = this.recuperaOra(risposta)
+                this.arrayUltimoMessaggio[this.utenteAttivo] = risposta.message;
             }, 1000);
-        }
+        },
+
+        // mi salvo sugli array l'ora e l'ultimo msg inviati 
+        ultimaModifica() {
+            for (let i = 0; i < this.contacts.length; i++) {
+                const element = this.contacts[i].messages;
+                // prendo l'array dell'ultimo messaggio
+                const ultimoMessaggio = element[(element.length - 1)];
+                this.arrayOraUltimoMessaggio.push(this.recuperaOra(ultimoMessaggio))
+                this.arrayUltimoMessaggio.push(ultimoMessaggio.message)
+            }
+        },
+
+        // recupero solo l'ora per la chat
+        recuperaOra(element) {
+            let ora = element.date;
+            ora = ora.split(" ")[1];
+            ora = ora.split(":")[0] + ":" + ora.split(":")[1]
+            return ora;
+        },
+
+
+
 
     },
     mounted() {
+        this.ultimaModifica();
+
+
     }
 
 }).mount("#app")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// controlloInput() {
+//     this.contacts.forEach(element => {
+//         let nome = element.name.toLowerCase();
+//         this.listaNomiMin.push(nome)
+//     });
+
+//     let display = "d-block";
+
+//     for (let nome of this.listaNomiMin) {
+//         if (this.cercaContatto.length > 1) {
+//             if (!nome.includes(this.cercaContatto.toLowerCase())) {
+//                 console.log("frase " + nome);
+//                 display = "d-none";
+//                 break;
+//             } else {
+//                 if (nome[0] === this.cercaContatto.toLowerCase()) {
+//                     console.log("primo " + nome);
+//                     display = "d-none";
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return display;
+//     }
+
+
+// }
+
