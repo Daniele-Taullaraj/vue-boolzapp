@@ -104,6 +104,10 @@ a {
     height: 13%;
 }
 
+#card {
+    height: 100%;
+}
+
 /*++++++++++++++++++++++++++++ RIGHT CONTAINER ++++++++++++++++++++++++++++*/
 #right-container {
     width: 65%;
@@ -125,6 +129,17 @@ a {
 
 #right-container #chat-container .clock {
     right: 0.3rem;
+}
+
+.delete {
+    top: 2rem;
+    z-index: 1;
+}
+
+
+.delete div:hover {
+    background-color: var(--bg-grey-soft);
+    cursor: pointer;
 }
 
 /* right container input messaggio */

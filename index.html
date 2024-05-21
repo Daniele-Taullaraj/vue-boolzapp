@@ -65,7 +65,7 @@
 
                 <!-- cerca contatto -->
                 <div id="find-contact" class="input-group p-1">
-                    <button class="btn btn-light border" type="button">
+                    <button class="btn btn-light border" type="button" @click="findContact()">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat"
@@ -77,15 +77,20 @@
                 <div id="contact-list" class="h-75">
 
                     <!-- card contatto -->
+
                     <div v-for="(element,indice) in contacts" @click="attivaChat(indice)"
-                        :class="inizializzaChat(indice)" :class="controlloInput">
-                        <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
-                        <div class="d-flex justify-content-between align-items-start ">
-                            <div>
-                                <span class="grassetto d-block m-0">{{element.name}}</span>
-                                <span class="text-secondary ">{{arrayUltimoMessaggio[indice]}}</span>
+                        :class="inizializzaChat(indice)">
+
+                        <div id="card" class="overflow-hidden">
+                            <!-- :class="'d-none': isHidden" -->
+                            <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
+                            <div class="d-flex justify-content-between align-items-start ">
+                                <div>
+                                    <span class="grassetto d-block m-0">{{element.name}}</span>
+                                    <span class="text-secondary ">{{arrayUltimoMessaggio[indice]}}</span>
+                                </div>
+                                <span class="text-secondary">{{arrayOraUltimoMessaggio[indice]}}</span>
                             </div>
-                            <span class="text-secondary">{{arrayOraUltimoMessaggio[indice]}}</span>
                         </div>
                     </div>
 
@@ -125,19 +130,31 @@
                     <div v-for="element,i in contacts[utenteAttivo].messages">
 
                         <!-- messaggio inviato -->
-                        <div v-if="element.status === 'sent'" class="row justify-content-end mb-2">
+                        <div v-if="element.status === 'sent'" class="row justify-content-end mb-2 position-relative"
+                            @click="modificaMessaggio(i)">
                             <span class="send-message bg-light p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
                                 <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
                             </span>
+                            <div class="delete p-0 bg-white border border-2 border-grey w-25 position-absolute end-0 "
+                                :class="{'d-none': messaggioSelezionato !== i, 'd-block': messaggioSelezionato === i}">
+                                <div class="p-1 fs-6">Info</div>
+                                <div class="p-1 fs-6" @click.stop="cancellaMessaggio(i)">Delete</div>
+                            </div>
                         </div>
 
                         <!-- messaggio ricevuto -->
-                        <div v-if="element.status === 'received'" class="row justify-content-start mb-2 ">
+                        <div v-if="element.status === 'received'"
+                            class="row justify-content-start mb-2 position-relative" @click="modificaMessaggio(i)">
                             <span class="received-message bg-success p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
                                 <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
                             </span>
+                            <div class="delete p-0 bg-white border border-2 border-grey w-25 position-absolute "
+                                :class="{'d-none': messaggioSelezionato != i, 'd-block': messaggioSelezionato == i}">
+                                <div class="p-1 fs-6">Info</div>
+                                <div class="p-1 fs-6" @click.stop="cancellaMessaggio(i)">Delete</div>
+                            </div>
                         </div>
 
                     </div>

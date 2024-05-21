@@ -172,10 +172,18 @@ createApp({
             // array utilizzati per sapere l'ulltimo messaggio e l'ultimo orario
             arrayOraUltimoMessaggio: [],
             arrayUltimoMessaggio: [],
-            // variabile per filtrare gli utenti
+            // variabile per cercare gli utenti
             cercaContatto: "",
+            //variabile display none
+            // isHidden: false,
+            // 
             listaNomiMin: [],
-            nomeDoveImpazzisco: ""
+            nomeDoveImpazzisco: "",
+
+            messaggioSelezionato: null,
+
+
+
         }
     },
     methods: {
@@ -238,13 +246,19 @@ createApp({
         },
 
 
+        // delete messaggio
+        modificaMessaggio(i) {
+            this.messaggioSelezionato = i;
+        },
 
 
+        cancellaMessaggio(i) {
+            this.contacts[this.utenteAttivo].messages.splice(i, 1);
+            this.messaggioSelezionato = null;
+        }
     },
     mounted() {
         this.ultimaModifica();
-
-
     }
 
 }).mount("#app")
@@ -280,7 +294,17 @@ createApp({
 
 
 
-
+// findContact() {
+//     this.contacts.forEach(element => {
+//         if (element.name.includes(this.cercaContatto)) {
+//             element.push({
+//                 risposta: false;
+//             })
+//         } else {
+//             this.isHidden = false;
+//         }
+//     });
+// },
 
 
 
