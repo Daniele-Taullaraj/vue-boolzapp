@@ -25,18 +25,18 @@
 </head>
 
 <body>
-    <!-- contenitore app -->
+    <!-- container app -->
     <div id="app" class="py-4 w-100">
         <!-- main-container -->
         <div id="main-container" class="h-100 d-flex m-auto">
 
 
 
-            <!-- contenitore utente e lista chat -->
+            <!-- container user and chat lists -->
             <div id="left-container">
 
 
-                <!-- utente -->
+                <!-- main user -->
                 <div id="main-user" class="p-2 d-flex justify-content-between align-items-center">
                     <div>
                         <img src="https://i.pravatar.cc" class="rounded-circle me-2 ">
@@ -50,7 +50,7 @@
                 </div>
 
 
-                <!-- notifiche on/off -->
+                <!-- notifications on/off -->
                 <div id="notification" class="p-2 d-flex align-items-center ">
                     <button class="me-2 p-2 rounded-circle border-0">
                         <i class="fa-solid fa-bell-slash "></i>
@@ -63,58 +63,57 @@
                 </div>
 
 
-                <!-- cerca contatto -->
+                <!-- find contact -->
                 <div id="find-contact" class="input-group p-1">
                     <button class="btn btn-light border" type="button" @click="findContact()">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <input type="text" class="form-control" placeholder="Cerca o inizia una nuova chat"
-                        @input="controlloInput" v-model="cercaContatto">
+                        v-model="contactName">
+                    <!-- @input="controlloInput" -->
                 </div>
 
 
-                <!-- lista contatti -->
+                <!-- contact lists -->
                 <div id="contact-list" class="h-75">
 
-                    <!-- card contatto -->
+                    <!-- contact card -->
 
-                    <div v-for="(element,indice) in contacts" @click="attivaChat(indice)"
-                        :class="inizializzaChat(indice)">
-
-                        <div id="card" class="overflow-hidden">
-                            <!-- :class="'d-none': isHidden" -->
+                    <div v-for="(element,index) in contacts" @click="activeChat(index)"
+                        :class="[firstActiveChat(index),element.visible ? 'd-block' : 'd-none']">
+                        <div id="card" class="overflow-hidden h-100">
                             <img :src="element.avatar" class="float-start h-100 rounded-circle me-2">
                             <div class="d-flex justify-content-between align-items-start ">
                                 <div>
                                     <span class="grassetto d-block m-0">{{element.name}}</span>
-                                    <span class="text-secondary ">{{arrayUltimoMessaggio[indice]}}</span>
+                                    <span class="text-secondary ">{{listLastMessage[index]}}</span>
                                 </div>
-                                <span class="text-secondary">{{arrayOraUltimoMessaggio[indice]}}</span>
+                                <span class="text-secondary">{{hoursListLastMessage[index]}}</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- fine-lista contatti -->
+                    <!-- end contact-lists -->
                 </div>
 
 
-                <!-- fine lest-container -->
+                <!-- end left-container -->
             </div>
 
 
 
 
-            <!-- contenitore chat attiva -->
+            <!-- container active chat -->
             <div id="right-container">
 
 
-                <!-- utente attivo -->
+                <!-- user attivo -->
                 <div id="contact-active" class="p-2 border-start d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <img :src="contacts[utenteAttivo].avatar" class="rounded-circle me-2">
+                        <img :src="contacts[activeUser].avatar" class="rounded-circle me-2">
                         <div>
-                            <span class="grassetto ">{{contacts[utenteAttivo].name}}</span>
-                            <span class="d-block">{{arrayUltimoMessaggio[utenteAttivo]}}</span>
+                            <span class="grassetto ">{{contacts[activeUser].name}}</span>
+                            <span class="d-block">{{listLastMessage[activeUser]}}</span>
                         </div>
                     </div>
                     <div>
@@ -125,56 +124,57 @@
                 </div>
 
 
-                <!-- contenitore chat -->
+                <!-- chat container -->
                 <div id="chat-container" class="p-5 w-100 container">
-                    <div v-for="element,i in contacts[utenteAttivo].messages">
+                    <div v-for="element,index in contacts[activeUser].messages">
 
-                        <!-- messaggio inviato -->
+                        <!-- send message -->
                         <div v-if="element.status === 'sent'" class="row justify-content-end mb-2 position-relative"
-                            @click="modificaMessaggio(i)">
+                            @click="messageOption(index)">
                             <span class="send-message bg-light p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
-                                <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
+                                <span class="clock position-absolute bottom-0">{{exportHours(element)}}</span>
                             </span>
                             <div class="delete p-0 bg-white border border-2 border-grey w-25 position-absolute end-0 "
-                                :class="{'d-none': messaggioSelezionato !== i, 'd-block': messaggioSelezionato === i}">
+                                :class="{'d-none': selectedMessage != index, 'd-block': selectedMessage == index}">
                                 <div class="p-1 fs-6">Info</div>
-                                <div class="p-1 fs-6" @click.stop="cancellaMessaggio(i)">Delete</div>
+                                <div class="p-1 fs-6" @click.stop="deleteMessage(index)">Delete</div>
                             </div>
                         </div>
 
-                        <!-- messaggio ricevuto -->
+
+                        <!-- received message -->
                         <div v-if="element.status === 'received'"
-                            class="row justify-content-start mb-2 position-relative" @click="modificaMessaggio(i)">
+                            class="row justify-content-start mb-2 position-relative" @click="messageOption(index)">
                             <span class="received-message bg-success p-3 rounded-3 col-4 position-relative">
                                 {{element.message}}
-                                <span class="clock position-absolute bottom-0">{{recuperaOra(element)}}</span>
+                                <span class="clock position-absolute bottom-0">{{exportHours(element)}}</span>
                             </span>
                             <div class="delete p-0 bg-white border border-2 border-grey w-25 position-absolute "
-                                :class="{'d-none': messaggioSelezionato != i, 'd-block': messaggioSelezionato == i}">
+                                :class="{'d-none': selectedMessage != index, 'd-block': selectedMessage == index}">
                                 <div class="p-1 fs-6">Info</div>
-                                <div class="p-1 fs-6" @click.stop="cancellaMessaggio(i)">Delete</div>
+                                <div class="p-1 fs-6" @click.stop="deleteMessage(index)">Delete</div>
                             </div>
                         </div>
 
                     </div>
-                    <!-- fine chat -->
+                    <!-- end chat container -->
                 </div>
 
 
-                <!-- input messaggio -->
+                <!-- input message -->
                 <div id="message-input" class="d-flex align-items-center">
                     <button class="px-3 py-2 mx-3 rounded-3 fs-5 border-0">
                         <i class="fa-regular fa-face-smile"></i>
                     </button>
                     <input type="text" class="form-control p-2" placeholder="Scrivi un messaggio"
-                        @keyup.enter="stampaMessaggio()" v-model="messaggioInviato">
+                        @keyup.enter="printMessage()" v-model="inputMessage">
                     <button class="px-3 py-2 mx-3 rounded-3 fs-5 border-0">
                         <i class="fa-solid fa-microphone"></i>
                     </button>
                 </div>
 
-                <!-- fine right-container -->
+                <!-- end right-container -->
             </div>
 
         </div>

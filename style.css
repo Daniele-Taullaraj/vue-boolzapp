@@ -70,7 +70,7 @@ a {
     height: 9%;
 }
 
-/* left container notification */
+/* left container notifications */
 #left-container #notification {
     background-color: var(--bg-sky-blue);
     height: 9%;
@@ -80,7 +80,7 @@ a {
     color: var(--bg-sky-blue);
 }
 
-/* left container find contact */
+/* left container find contacts */
 #left-container #find-contact {
     background-color: var(--bg-grey-soft);
     height: 7%;
@@ -92,28 +92,25 @@ a {
     width: 20%;
 }
 
-/* left container contact list */
+/* left container contact lists */
 #left-container #contact-list {
     overflow-y: scroll;
 }
 
-/* left container contact card */
+/* left container contact cards */
 #left-container #contact-list .contact-card {
     border-bottom-color: var(--bg-grey-hard);
     background-color: white;
     height: 13%;
 }
 
-#card {
-    height: 100%;
-}
 
 /*++++++++++++++++++++++++++++ RIGHT CONTAINER ++++++++++++++++++++++++++++*/
 #right-container {
     width: 65%;
 }
 
-/* right container contact active */
+/* right container user active */
 #right-container #contact-active {
     background-color: var(--bg-grey-soft);
     border-left-color: var(--bg-grey-hard);
@@ -136,13 +133,12 @@ a {
     z-index: 1;
 }
 
-
 .delete div:hover {
     background-color: var(--bg-grey-soft);
     cursor: pointer;
 }
 
-/* right container input messaggio */
+/* right container input message */
 #right-container #message-input {
     background-color: var(--bg-grey-soft);
     height: 8%;

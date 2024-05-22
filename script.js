@@ -165,22 +165,21 @@ createApp({
                     ],
                 }
             ],
-            // variabile per tenere traccia dell'utente attivo
-            utenteAttivo: 0,
+            // variabile tiene traccia dell'utente attivo
+            activeUser: 0,
             // variabile utilizzata per l'input da tasiera
-            messaggioInviato: null,
-            // array utilizzati per sapere l'ulltimo messaggio e l'ultimo orario
-            arrayOraUltimoMessaggio: [],
-            arrayUltimoMessaggio: [],
-            // variabile per cercare gli utenti
-            cercaContatto: "",
-            //variabile display none
-            // isHidden: false,
-            // 
-            listaNomiMin: [],
-            nomeDoveImpazzisco: "",
+            inputMessage: null,
+            // array utilizzati per salvare l'ultimo orario e l'ulltimo messaggio 
+            hoursListLastMessage: [],
+            listLastMessage: [],
+            // variabile tiene traccia del messaggio selezionato
+            selectedMessage: null,
 
-            messaggioSelezionato: null,
+
+
+
+
+
 
 
 
@@ -189,8 +188,8 @@ createApp({
     methods: {
 
         // quando la pagina viene caricata attiva subito la prima chat assegnando la classe chat-attiva
-        inizializzaChat(indice) {
-            if (indice == this.utenteAttivo) {
+        firstActiveChat(index) {
+            if (index == this.activeUser) {
                 return "chat-attiva contact-card clearfix p-2 border-bottom"
             } else {
                 return "contact-card clearfix p-2 border-bottom"
@@ -198,47 +197,47 @@ createApp({
         },
 
         // attiva nuovo utente al clik
-        attivaChat(indice) {
-            this.utenteAttivo = indice;
+        activeChat(index) {
+            this.activeUser = index;
         },
 
         // quando si clicca enter da tastiera stampa msg in pagina e manda risposta "ok" dopo 1sec,entrambi i messaggi
         // nell'ordine di invio andranno a sostituire l'elemento con l'indice attivo nell'array ultimo messaggio e l'ora
-        stampaMessaggio() {
+        printMessage() {
             let userRisposta = {
                 date: '10/10/2020 23:52:00',
-                message: this.messaggioInviato,
+                message: this.inputMessage,
                 status: 'sent'
             }
-            this.contacts[this.utenteAttivo].messages.push(userRisposta);
-            this.arrayOraUltimoMessaggio[this.utenteAttivo] = this.recuperaOra(userRisposta)
-            this.arrayUltimoMessaggio[this.utenteAttivo] = this.messaggioInviato;
-            this.messaggioInviato = "";
+            this.contacts[this.activeUser].messages.push(userRisposta);
+            this.hoursListLastMessage[this.activeUser] = this.exportHours(userRisposta)
+            this.listLastMessage[this.activeUser] = this.inputMessage;
+            this.inputMessage = "";
             setTimeout(() => {
                 let risposta = {
                     date: '10/10/2020 00:10:00',
                     message: "ok",
                     status: 'received'
                 }
-                this.contacts[this.utenteAttivo].messages.push(risposta)
-                this.arrayOraUltimoMessaggio[this.utenteAttivo] = this.recuperaOra(risposta)
-                this.arrayUltimoMessaggio[this.utenteAttivo] = risposta.message;
+                this.contacts[this.activeUser].messages.push(risposta)
+                this.hoursListLastMessage[this.activeUser] = this.exportHours(risposta)
+                this.listLastMessage[this.activeUser] = risposta.message;
             }, 1000);
         },
 
-        // mi salvo sugli array l'ora e l'ultimo msg inviati 
-        ultimaModifica() {
+        // salva sugli array l'ora e l'ultimo msg inviati 
+        lastEdit() {
             for (let i = 0; i < this.contacts.length; i++) {
                 const element = this.contacts[i].messages;
                 // prendo l'array dell'ultimo messaggio
                 const ultimoMessaggio = element[(element.length - 1)];
-                this.arrayOraUltimoMessaggio.push(this.recuperaOra(ultimoMessaggio))
-                this.arrayUltimoMessaggio.push(ultimoMessaggio.message)
+                this.hoursListLastMessage.push(this.exportHours(ultimoMessaggio))
+                this.listLastMessage.push(ultimoMessaggio.message)
             }
         },
 
         // recupero solo l'ora per la chat
-        recuperaOra(element) {
+        exportHours(element) {
             let ora = element.date;
             ora = ora.split(" ")[1];
             ora = ora.split(":")[0] + ":" + ora.split(":")[1]
@@ -246,99 +245,31 @@ createApp({
         },
 
 
-        // delete messaggio
-        modificaMessaggio(i) {
-            this.messaggioSelezionato = i;
+        // fa apparire le opzioni per il messaggio
+        messageOption(index) {
+            this.selectedMessage = index;
         },
 
+        // cancella messaggio
+        deleteMessage(index) {
+            this.contacts[this.activeUser].messages.splice(index, 1);
+            this.selectedMessage = null;
+        },
 
-        cancellaMessaggio(i) {
-            this.contacts[this.utenteAttivo].messages.splice(i, 1);
-            this.messaggioSelezionato = null;
-        }
+        // cerca utente
+        findContact() {
+            for (let i = 0; i < this.contacts.length; i++) {
+                if (this.contacts[i].name.toLowerCase().startsWith(this.contactName.toLowerCase())) {
+                    this.contacts[i].visible = true
+                    this.activeUser = i
+                } else {
+                    this.contacts[i].visible = false
+                }
+            }
+        },
     },
     mounted() {
-        this.ultimaModifica();
+        this.lastEdit();
     }
 
 }).mount("#app")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// findContact() {
-//     this.contacts.forEach(element => {
-//         if (element.name.includes(this.cercaContatto)) {
-//             element.push({
-//                 risposta: false;
-//             })
-//         } else {
-//             this.isHidden = false;
-//         }
-//     });
-// },
-
-
-
-
-
-
-
-
-// controlloInput() {
-//     this.contacts.forEach(element => {
-//         let nome = element.name.toLowerCase();
-//         this.listaNomiMin.push(nome)
-//     });
-
-//     let display = "d-block";
-
-//     for (let nome of this.listaNomiMin) {
-//         if (this.cercaContatto.length > 1) {
-//             if (!nome.includes(this.cercaContatto.toLowerCase())) {
-//                 console.log("frase " + nome);
-//                 display = "d-none";
-//                 break;
-//             } else {
-//                 if (nome[0] === this.cercaContatto.toLowerCase()) {
-//                     console.log("primo " + nome);
-//                     display = "d-none";
-//                     break;
-//                 }
-//             }
-//         }
-
-//         return display;
-//     }
-
-
-// }
-
